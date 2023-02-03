@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { FAVORITE_NOTES, LOADING, NOTES } from "../assets/CONSTANTS";
 import { NoteItem } from "../components/NoteItem";
 import axios from "../utils/axios";
 
@@ -9,7 +10,7 @@ export const HomePage = () => {
   const { isLoading } = useSelector((state) => state.notes);
 
   if (isLoading) {
-    return <p className="text-center">Загрузка...</p>;
+    return <p className="text-center">{LOADING}</p>;
   }
 
   const fetchNotes = async () => {
@@ -27,7 +28,7 @@ export const HomePage = () => {
       {favoriteNotes && (
         <Fragment>
           <h2 className="ml-2 mb-1 font-semibold select-none">
-            Избранные заметки
+            {FAVORITE_NOTES}
           </h2>
           <div className="flex flex-wrap gap-2">
             {favoriteNotes.map((note, i) => (
@@ -40,7 +41,7 @@ export const HomePage = () => {
       {notes && (
         <Fragment>
           <h2 className="ml-2 mb-1 mt-6 text-sm font-semibold opacity-75 select-none">
-            Заметки
+            {NOTES}
           </h2>
           <div className="flex flex-wrap gap-2">
             {notes.map((note, i) => (

@@ -5,6 +5,7 @@ import axios from "../utils/axios";
 import { checkIsAuth } from "../app/auth/authSlice";
 import { IsNotAuth } from "../components/IsNotAuth";
 import { removeNote } from "../app/notes/notesSlice";
+import { DELETE, EDIT, EDITED } from "../assets/CONSTANTS";
 
 export const NotePage = () => {
   const [note, setNote] = useState({});
@@ -48,22 +49,15 @@ export const NotePage = () => {
       <h1 className="font-semibold text-2xl">{note.title}</h1>
       <h2 className="mt-4 text-base">{note.body}</h2>
       <h3 className="mt-6 text-xs text-right text-black/80">
-        Изменено: {note.updatedAt}
+        {EDITED}: {note.updatedAt}
       </h3>
 
-      <div className="mt-6 flex justify-end gap-4">
-        <button
-          type="button"
-          onClick={removeNoteHandler}
-          className="btn inline-flex justify-center rounded-lg border border-transparent px-6 py-2 text-base font-medium text-[#ff0000] transition-all hover:opacity-80"
-        >
-          Удалить
+      <div className="btnsRow">
+        <button type="button" onClick={removeNoteHandler} className="deleteBtn">
+          {DELETE}
         </button>
-        <Link
-          to={`/${id}/edit`}
-          className="btn inline-flex justify-center rounded-lg border border-transparent bg-black px-6 py-2 text-base font-medium text-white transition-all hover:opacity-80"
-        >
-          Изменить
+        <Link to={`/${id}/edit`} className="mainBtn">
+          {EDIT}
         </Link>
       </div>
     </article>

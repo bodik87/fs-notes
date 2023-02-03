@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { checkIsAuth, logout } from "../app/auth/authSlice";
+import { EXIT, TO_HOME } from "../assets/CONSTANTS";
 
 export const Navigation = () => {
   const isAuth = useSelector(checkIsAuth);
@@ -43,11 +44,11 @@ export const Navigation = () => {
               d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
             />
           </svg>
-          На главную
+          {TO_HOME}
         </Link>
       )}
       {isAuth && (
-        <button onClick={logoutHandler} title="Выход">
+        <button onClick={logoutHandler} title={EXIT}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

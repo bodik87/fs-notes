@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { EDITED } from "../assets/CONSTANTS";
 
 export const NoteItem = ({ note }) => {
   return (
@@ -14,7 +15,7 @@ export const NoteItem = ({ note }) => {
         {note?.body.length > 200 && "..."}
       </h2>
       <h3 className="mt-3 text-xs text-black/60 text-right">
-        Изменено: {note?.updatedAt}
+        {EDITED}: {note?.updatedAt}
       </h3>
     </Link>
   );

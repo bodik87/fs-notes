@@ -3,6 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { checkIsAuth } from "../app/auth/authSlice";
 import { updateNote } from "../app/notes/notesSlice";
+import {
+  ADD_TO_FAVORITE,
+  COLORS,
+  DISABLE,
+  ENTER_TITLE,
+  NOTE_PLASEHOLDER,
+  NOTE_TEXT,
+  TITLE,
+  UPDATE,
+} from "../assets/CONSTANTS";
 import Colors from "../components/Colors";
 import { IsNotAuth } from "../components/IsNotAuth";
 import axios from "../utils/axios";
@@ -54,33 +64,33 @@ export const EditNotePage = () => {
 
   return (
     <form onSubmit={onSubmitFormHandler} className="form">
-      <label className="text-xs text-gray-400">
-        Заголовок
+      <label className="label">
+        {TITLE}
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Введите заголовок"
+          placeholder={ENTER_TITLE}
           className="noteInput"
         />
       </label>
 
-      <label className="text-xs text-gray-400">
-        Текст заметки
+      <label className="label">
+        {NOTE_TEXT}
         <textarea
           type="text"
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          placeholder="Заметка..."
+          placeholder={NOTE_PLASEHOLDER}
           className="noteInput h-40"
         />
       </label>
-      <label className="mt-2 flex w-full flex-col items-center text-xs text-gray-400">
-        Цвет фона
+      <label className="label mt-2 flex w-full flex-col items-center">
+        {COLORS}
         <Colors activeColor={color} setColor={setColor} />
       </label>
-      <label className="mt-6 flex w-full justify-center items-center pb-3 text-xs text-gray-400">
-        Избранное
+      <label className="label mt-6 pb-6 flex w-full justify-center items-center">
+        {ADD_TO_FAVORITE}
         <input
           type="checkbox"
           className="w-5 h-5 ml-2"
@@ -88,20 +98,16 @@ export const EditNotePage = () => {
           onChange={(event) => setIsFavorite(event.target.checked)}
         />
       </label>
-      <div className="mt-4 flex justify-center gap-4">
-        <button
-          type="submit"
-          onClick={submitHandler}
-          className="btn inline-flex justify-center rounded-lg border border-transparent bg-black px-6 py-2 text-base font-medium text-white transition-all hover:opacity-80"
-        >
-          Сохранить
-        </button>
+      <div className="btnsRow">
         <button
           type="button"
           onClick={clearFormHandler}
-          className="btn inline-flex justify-center rounded-lg border border-transparent bg-white px-2 py-2 text-base font-medium text-[#696969] transition-all hover:opacity-80"
+          className="secondaryBtn"
         >
-          Отменить
+          {DISABLE}
+        </button>
+        <button type="submit" onClick={submitHandler} className="mainBtn">
+          {UPDATE}
         </button>
       </div>
     </form>

@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { checkIsAuth, loginUser } from "../app/auth/authSlice";
+import {
+  AUTHORIZATION,
+  ENTER,
+  LOGIN,
+  PASSWORD,
+  REGISTER,
+} from "../assets/CONSTANTS";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -27,44 +34,40 @@ export const LoginPage = () => {
 
   return (
     <form onSubmit={(e) => e.preventDefault()} className="form">
-      <h1 className="text-xl font-semibold text-center">Авторизация</h1>
-      <label className="text-xs text-gray-400">
-        Логин
+      <h1 className="text-xl font-semibold text-center">{AUTHORIZATION}</h1>
+
+      <label className="label">
+        {LOGIN}
         <input
           type="text"
+          className="input"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Логин"
-          className="input"
+          placeholder={LOGIN}
         />
       </label>
-      <label className="text-xs text-gray-400">
-        Пароль
+
+      <label className="label">
+        {PASSWORD}
         <input
           type="password"
+          className="input"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Пароль"
-          className="input"
+          placeholder={PASSWORD}
         />
       </label>
 
       <div className="mt-6 flex flex-col items-center justify-center gap-4">
-        <button
-          onClick={habdleSubmit}
-          type="submit"
-          className="btn inline-flex justify-center rounded-lg border border-transparent bg-black px-6 py-2 text-base font-medium text-white transition-all hover:opacity-80"
-        >
-          Войти
+        <button onClick={habdleSubmit} type="submit" className="mainBtn">
+          {ENTER}
         </button>
-        <Link
-          className="px-6 py-2 text-base font-medium text-[#696969] transition-all hover:opacity-80"
-          onClick={() => setInfo("")}
-          to="/register"
-        >
-          Зарегистрироваться
+
+        <Link className="secondaryBtn" to="/register">
+          {REGISTER}
         </Link>
       </div>
+
       {status && (
         <p className="mt-6 text-center text-base text-red-600">{info}</p>
       )}

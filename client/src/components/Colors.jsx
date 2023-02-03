@@ -1,15 +1,6 @@
 import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
-
-const colors = [
-  "bg-[#F2F2F2]",
-  "bg-[#FFF475]",
-  "bg-[#FBBC04]",
-  "bg-[#F28B82]",
-  "bg-[#CCFF90]",
-  "bg-[#A7FFEB]",
-  "bg-[#D7AEFB]",
-];
+import { colors } from "../assets/CONSTANTS";
 
 export default function Colors({ activeColor, setColor }) {
   const [selected, setSelected] = useState(colors[0]);
