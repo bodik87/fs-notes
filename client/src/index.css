@@ -4,9 +4,7 @@
 
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  padding: 12px;
   -webkit-tap-highlight-color: transparent;
-  background-color: white;
 }
 
 *::-webkit-scrollbar {
@@ -20,7 +18,7 @@
 
 @layer components {
   .form {
-    @apply block min-w-[320px] max-w-xl h-60 mx-auto mt-10;
+    @apply block min-w-[320px] max-w-xl px-4 h-60 mx-auto;
   }
   .input {
     @apply mt-1 py-3 px-3 text-black text-base w-full rounded-lg bg-gray-200 border outline-none placeholder:text-base placeholder:text-gray-500 transition-all focus:border-black/40;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 
 const colors = [
+  "bg-[#F2F2F2]",
   "bg-[#FFF475]",
   "bg-[#FBBC04]",
   "bg-[#F28B82]",
@@ -17,7 +18,7 @@ export default function Colors({ activeColor, setColor }) {
   return (
     <div className="mt-2">
       <RadioGroup value={selected} onChange={setSelected}>
-        <div className="flex gap-4 w-full max-w-xl">
+        <div className="flex gap-3 w-full max-w-xl">
           {colors.map((color, i) => (
             <RadioGroup.Option
               key={i}
@@ -26,13 +27,13 @@ export default function Colors({ activeColor, setColor }) {
               className={({ active, checked }) =>
                 `${active ? `${color}` : ""}
                   ${checked ? `${color}` : `${color}`}
-                    cursor-pointer rounded-full w-10 h-10 shadow-md focus:outline-none`
+                    cursor-pointer rounded-full w-9 h-9 shadow-md focus:outline-none border border-black/20`
               }
             >
               {({ active, checked }) => (
                 <>
                   <div className="flex w-full items-center justify-between">
-                    {checked && <CheckIcon className="h-10 w-10" />}
+                    {checked && <CheckIcon className="h-9 w-9" />}
                   </div>
                 </>
               )}
@@ -47,7 +48,6 @@ export default function Colors({ activeColor, setColor }) {
 function CheckIcon(props) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
-      {/* <circle cx={12} cy={12} r={12} fill="#fff" opacity="0.2" /> */}
       <path
         d="M7 13l3 3 7-7"
         stroke="#000"

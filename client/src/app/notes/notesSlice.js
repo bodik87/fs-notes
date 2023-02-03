@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
 
-// const LS_NOTES_KEY = "localNotes";
-
 const initialState = {
   notes: [],
   favoriteNotes: [],
@@ -121,5 +119,4 @@ export const notesSlice = createSlice({
   },
 });
 
-// export const { addNote, deleteNote } = notesSlice.actions;
 export default notesSlice.reducer;
