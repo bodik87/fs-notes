@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import authRoute from "./routes/auth.js";
+import noteRoute from "./routes/notes.js";
 
 mongoose.set("strictQuery", false);
 const app = express();
@@ -18,8 +19,10 @@ const DB_NAME = process.env.DB_NAME;
 // MIDDLEWARES
 app.use(cors()); // позволит отправлять запросы с разных IP
 app.use(express.json()); // для понимания Экспрессом формата JSON от фронта
+
 // ENDPOINTS
 app.use("/api/auth", authRoute); // при запросе на "/api/auth" будут отрабатываться все роуты из authRoute
+app.use("/api/notes", noteRoute);
 
 async function start() {
   try {

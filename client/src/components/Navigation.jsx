@@ -28,7 +28,7 @@ export const Navigation = () => {
       ) : (
         <Link
           to={"/"}
-          className="font-bold text-white px-3 py-2 rounded-lg bg-black"
+          className="font-bold text-black px-3 py-2 rounded-lg bg-white"
         >
           На главную
         </Link>

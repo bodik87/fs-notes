@@ -1,52 +1,125 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "../../utils/axios";
 
-const LS_NOTES_KEY = "localNotes";
+// const LS_NOTES_KEY = "localNotes";
 
-const initialState = JSON.parse(localStorage.getItem(LS_NOTES_KEY)) ?? [
-  {
-    id: 1,
-    title: "My first note",
-    color: "#30B3F6",
-    body: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo, autem deserunt labore veritatis dicta et, temporibus eligendi facere at non cum atque quam! Nesciunt maxime odit doloremque eum quasi! Placeat. ",
-  },
-  {
-    id: 2,
-    title: "Second note",
-    color: "#62E1AC",
-    body: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo, autem deserunt labore veritatis dicta et.",
-  },
-  {
-    id: 3,
-    title: "Note 3",
-    color: "#F28B82",
-    body: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo, autem deserunt labore veritatis dicta et, temporibus eligendi facere at non cum atque quam! Nesciunt maxime odit doloremque eum quasi! Placeat. ",
-  },
-];
+const initialState = {
+  notes: [],
+  favoriteNotes: [],
+  isLoading: false,
+};
+
+export const createNote = createAsyncThunk(
+  "notes/createNote",
+  async ({ title, color, body, isFavorite }) => {
+    try {
+      const { data } = await axios.post("/notes", {
+        title,
+        color,
+        body,
+        isFavorite,
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const updateNote = createAsyncThunk(
+  "notes/updateNote",
+  async ({ title, color, body, isFavorite, id }) => {
+    try {
+      const { data } = await axios.put(`/notes/${id}`, {
+        title,
+        color,
+        body,
+        isFavorite,
+        id,
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getAllNotes = createAsyncThunk("notes/getAllNotes", async () => {
+  try {
+    const { data } = await axios.get("/notes");
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const removeNote = createAsyncThunk("notes/removeNote", async (id) => {
+  try {
+    const { data } = await axios.delete(`/notes/${id}`, id);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 export const notesSlice = createSlice({
   name: "notes",
   initialState,
-  reducers: {
-    addNote: (state, action) => {
-      state.notes.push(action.payload);
-      localStorage.setItem(LS_NOTES_KEY, JSON.stringify(state));
+  reducers: {},
+  extraReducers: {
+    // Создание заметки
+    [createNote.pending]: (state) => {
+      state.isLoading = true;
     },
-    deleteNote: (state, action) => {
-      state.notes.filter((note) => note.id !== action.payload);
-      localStorage.setItem(LS_NOTES_KEY, JSON.stringify(state));
+    [createNote.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.notes.push(action.payload.newNote);
     },
-    updateNote: (state, action) => {
-      state.notes.map(
-        (note) =>
-          note.id === action.payload.id &&
-          ((note.title = action.payload.title),
-          (note.color = action.payload.color),
-          (note.body = action.payload.body))
+    [createNote.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    // Получение всех заметок
+    [getAllNotes.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAllNotes.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.notes = action.payload.notes; // из контролеров
+      state.favoriteNotes = action.payload.favoriteNotes; // из контролеров
+    },
+    [getAllNotes.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    // Удаление заметки
+    [removeNote.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [removeNote.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.notes = state.notes.filter(
+        (note) => note._id !== action.payload._id
       );
-      localStorage.setItem(LS_NOTES_KEY, JSON.stringify(state));
+    },
+    [removeNote.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    // Обновление заметки
+    [updateNote.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateNote.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      const index = state.notes.findIndex(
+        (note) => note._id === action.payload._id
+      );
+      console.log(action.payload);
+      state.notes[index] = action.payload;
+    },
+    [updateNote.rejected]: (state) => {
+      state.isLoading = false;
     },
   },
 });
 
-export const { addNote, deleteNote } = notesSlice.actions;
+// export const { addNote, deleteNote } = notesSlice.actions;
 export default notesSlice.reducer;
