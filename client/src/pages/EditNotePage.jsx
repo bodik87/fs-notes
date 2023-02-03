@@ -52,15 +52,15 @@ export const EditNotePage = () => {
     setIsFavorite(false);
   };
 
+  const onSubmitFormHandler = (event) => {
+    event.preventDefault();
+    navigate("/");
+  };
+
   const isAuth = useSelector(checkIsAuth);
   if (!isAuth) {
     return <IsNotAuth />;
   }
-
-  const onSubmitFormHandler = (event) => {
-    event.preventDefault();
-    // navigate("/");
-  };
 
   return (
     <form onSubmit={onSubmitFormHandler} className="form">

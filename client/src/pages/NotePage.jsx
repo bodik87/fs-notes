@@ -46,19 +46,25 @@ export const NotePage = () => {
       style={{ backgroundColor: note.color }}
       className="absolute inset-0 pt-20 p-6 overflow-auto"
     >
-      <h1 className="font-semibold text-2xl">{note.title}</h1>
-      <h2 className="mt-4 text-base">{note.body}</h2>
-      <h3 className="mt-6 text-xs text-right text-black/80">
-        {EDITED}: {note.updatedAt}
-      </h3>
+      <div className="max-w-xl mx-auto">
+        <h1 className="font-semibold text-2xl">{note.title}</h1>
+        <h2 className="mt-1 text-base">{note.body}</h2>
+        <h3 className="mt-6 text-xs text-right text-black/80">
+          {EDITED}: {note.updatedAt}
+        </h3>
 
-      <div className="btnsRow">
-        <button type="button" onClick={removeNoteHandler} className="deleteBtn">
-          {DELETE}
-        </button>
-        <Link to={`/${id}/edit`} className="mainBtn">
-          {EDIT}
-        </Link>
+        <div className="btnsRow">
+          <button
+            type="button"
+            onClick={removeNoteHandler}
+            className="deleteBtn"
+          >
+            {DELETE}
+          </button>
+          <Link to={`/${id}/edit`} className="mainBtn">
+            {EDIT}
+          </Link>
+        </div>
       </div>
     </article>
   );

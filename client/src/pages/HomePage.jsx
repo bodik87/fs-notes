@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { FAVORITE_NOTES, LOADING, NOTES } from "../assets/CONSTANTS";
+import { EMPTY, FAVORITE_NOTES, LOADING, NOTES } from "../assets/CONSTANTS";
 import { NoteItem } from "../components/NoteItem";
 import axios from "../utils/axios";
 
@@ -9,28 +9,32 @@ export const HomePage = () => {
   const [notesArray, setNotesArray] = useState([]);
   const { isLoading } = useSelector((state) => state.notes);
 
-  if (isLoading) {
-    return <p className="text-center">{LOADING}</p>;
-  }
-
   const fetchNotes = async () => {
     const { data } = await axios.get(`/notes/users/me`);
     setNotesArray(data);
   };
+  useEffect(() => {
+    fetchNotes();
+  }, [isLoading]);
 
-  fetchNotes();
+  const favoriteNotes = notesArray.filter((note) => note?.isFavorite);
+  const notes = notesArray.filter((note) => note?.isFavorite === false);
 
-  const favoriteNotes = notesArray.filter((note) => note.isFavorite);
-  const notes = notesArray.filter((note) => note.isFavorite === false);
+  if (isLoading) {
+    return <p className="text-center">{LOADING}</p>;
+  }
 
   return (
     <div className="px-4 pb-10">
-      {favoriteNotes && (
+      {notesArray.length === 0 && (
+        <p className="mt-32 text-2xl text-center">{EMPTY}</p>
+      )}
+      {favoriteNotes.length > 0 && (
         <Fragment>
           <h2 className="ml-2 mb-1 font-semibold select-none">
             {FAVORITE_NOTES}
           </h2>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-6">
             {favoriteNotes.map((note, i) => (
               <NoteItem key={i} note={note} />
             ))}
@@ -38,9 +42,9 @@ export const HomePage = () => {
         </Fragment>
       )}
 
-      {notes && (
+      {notes.length > 0 && (
         <Fragment>
-          <h2 className="ml-2 mb-1 mt-6 text-sm font-semibold opacity-75 select-none">
+          <h2 className="ml-2 mb-1 text-sm font-semibold opacity-75 select-none">
             {NOTES}
           </h2>
           <div className="flex flex-wrap gap-2">

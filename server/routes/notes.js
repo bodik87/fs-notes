@@ -27,6 +27,6 @@ router.get("/:id", getById);
 router.delete("/:id", checkAuth, removeNote);
 
 // Update note localhost/api/notes/:id
-router.put("/:id", checkAuth, updateNote);
+router.patch("/:id", checkAuth, updateNote);
 
 export default router;

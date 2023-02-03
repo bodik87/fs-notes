@@ -101,6 +101,8 @@ export const updateNote = async (request, response) => {
     note.body = body;
     note.isFavorite = isFavorite;
 
+    await note.save();
+
     response.json(note);
   } catch (error) {
     console.log(error);

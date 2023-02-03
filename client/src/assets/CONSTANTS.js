@@ -7,6 +7,7 @@ export const REGISTER = "Зарегистрироваться";
 export const SUBMIT = "Подтвердить";
 export const IF_REGISTERED = "Уже зарегистрированы?";
 export const LOADING = "Загрузка...";
+export const EMPTY = "Заметки отсутствуют";
 export const NEED_AUTHORIZATION = "Авторизуйтесь";
 export const FAVORITE_NOTES = "Избранные заметки";
 export const NOTES = "Заметки";

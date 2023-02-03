@@ -5,6 +5,7 @@ const initialState = {
   notes: [],
   favoriteNotes: [],
   isLoading: false,
+  info: null,
 };
 
 export const createNote = createAsyncThunk(
@@ -28,7 +29,7 @@ export const updateNote = createAsyncThunk(
   "notes/updateNote",
   async ({ title, color, body, isFavorite, id }) => {
     try {
-      const { data } = await axios.put(`/notes/${id}`, {
+      const { data } = await axios.patch(`/notes/${id}`, {
         title,
         color,
         body,
@@ -76,7 +77,8 @@ export const notesSlice = createSlice({
     [createNote.rejected]: (state) => {
       state.isLoading = false;
     },
-    // Получение всех заметок
+
+    // Получение заметок от всех пользователей
     [getAllNotes.pending]: (state) => {
       state.isLoading = true;
     },
@@ -88,6 +90,7 @@ export const notesSlice = createSlice({
     [getAllNotes.rejected]: (state) => {
       state.isLoading = false;
     },
+
     // Удаление заметки
     [removeNote.pending]: (state) => {
       state.isLoading = true;
@@ -101,6 +104,7 @@ export const notesSlice = createSlice({
     [removeNote.rejected]: (state) => {
       state.isLoading = false;
     },
+
     // Обновление заметки
     [updateNote.pending]: (state) => {
       state.isLoading = true;
@@ -110,7 +114,7 @@ export const notesSlice = createSlice({
       const index = state.notes.findIndex(
         (note) => note._id === action.payload._id
       );
-      console.log(action.payload);
+      state.info = state.notes;
       state.notes[index] = action.payload;
     },
     [updateNote.rejected]: (state) => {
